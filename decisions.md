@@ -31,3 +31,10 @@
 **Decision:** Registered a `Second Brain` MCP server (filesystem, rooted at `/home/grok/second-brain`) in Newelle's `mcp-servers` setting, alongside the existing `Project Files` server (`/home/grok/Documents/Backup`).
 **Alternatives:** Point Newelle's RAG embeddings at the folder; keep Newelle's memory app-bound.
 **Why:** Newelle's own memory is an app-bound embedding index. Giving it direct filesystem access to this repo makes the same flat-markdown memory readable/writable by Newelle, Claude Code, Codex, and opencode identically — one memory, all agents.
+
+## 2026-08-20 — Embed Potpie as the context-graph layer
+
+**Decision:** Installed Potpie (potpie-context-engine 0.1.0, CPU-only torch) into `~/.local`, set it up against this repo (daemon, default pot, source registration, 8 claude skills), added a `notes/potpie.md` knowledge note, and added a Potpie card to the hub dashboard.
+**Alternatives:** Rely on the flat markdown alone; add a heavier RAG/vector store.
+**Why:** The markdown files are the durable, portable memory; Potpie adds a derived graph + semantic search over the repo for agents. CPU-only torch avoids the multi-GB CUDA download (no practical local LLM on this GPU).
+**Caveat:** `falkordb_lite` is in-memory in this build — committed graph claims don't survive a daemon restart; re-run propose/commit to repopulate.

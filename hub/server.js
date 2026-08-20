@@ -17,6 +17,7 @@ const tools = {
   claude: { name: 'Claude Code', type: 'terminal', command: 'claude' },
   codex: { name: 'Codex CLI', type: 'terminal', command: 'codex' },
   grok: { name: 'Grok Build', type: 'terminal', command: '/home/grok/.grok/bin/grok', cwd: '/home/grok' },
+  potpie: { name: 'Potpie', type: 'terminal', command: 'potpie ui' },
 };
 
 function json(res, status, payload) {
@@ -78,8 +79,8 @@ function getBrainStats() {
 }
 
 async function getStatus() {
-  const [paperclip, ollama, ollamaCli, newelle, claude, codex, grok, brain] = await Promise.all([
-    probe(tools.paperclip.url), probe(`${OLLAMA_URL}/api/tags`), commandAvailable('ollama'), commandAvailable('flatpak'), commandAvailable('claude'), commandAvailable('codex'), commandAvailable('/home/grok/.grok/bin/grok'), getBrainStats(),
+  const [paperclip, ollama, ollamaCli, newelle, claude, codex, grok, potpie, brain] = await Promise.all([
+    probe(tools.paperclip.url), probe(`${OLLAMA_URL}/api/tags`), commandAvailable('ollama'), commandAvailable('flatpak'), commandAvailable('claude'), commandAvailable('codex'), commandAvailable('/home/grok/.grok/bin/grok'), commandAvailable('potpie'), getBrainStats(),
   ]);
   let models = [];
   if (ollama.online) {
@@ -96,7 +97,7 @@ async function getStatus() {
       paperclip: { ...paperclip, url: tools.paperclip.url },
       ollama: { ...ollama, url: OLLAMA_URL, models },
       ollamaCli: { available: ollamaCli },
-      newelle: { available: newelle }, claude: { available: claude }, codex: { available: codex }, grok: { available: grok },
+      newelle: { available: newelle }, claude: { available: claude }, codex: { available: codex }, grok: { available: grok }, potpie: { available: potpie },
       manus: { online: true, url: 'https://manus.im' },
     },
   };

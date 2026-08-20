@@ -34,9 +34,13 @@ second-brain/
 - `GET /api/brain` — returns git commit, uncommitted-change count, and the file lists for `notes/`, `people/`, `projects/`, and root docs.
 - `POST /api/launch/:tool` — spawns an allow-listed local tool (loopback clients only).
 - `GET /brain/<path>` — read-only view of any file in this repo (markdown rendered as text).
-- `index.html` — a single self-contained dashboard: memory stats, file browser, and tool cards.
+- `index.html` — a single self-contained dashboard: memory stats, file browser, and tool cards (Ollama, Paperclip, Newelle, Claude, Codex, Grok, Manus, Potpie).
 
 Run it: `node hub/server.js` (managed as the `ai-hub` systemd user service).
+
+## Potpie (`notes/potpie.md`)
+
+Potpie indexes this repo into a context graph for agents (daemon, default pot, source registered; 8 claude skills). CLI: `potpie resolve/search/record/graph/ui`. Launched from the hub card (`potpie ui`). Note: the lite backend is in-memory — repopulate with `potpie graph propose` + `commit` after a daemon restart.
 
 ## Where things go
 
