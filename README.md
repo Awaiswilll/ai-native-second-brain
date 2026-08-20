@@ -1,5 +1,10 @@
 # Second Brain
 
+[![GitHub](https://img.shields.io/github/repo-size/Awaiswilll/ai-native-second-brain?label=repo%20size)](https://github.com/Awaiswilll/ai-native-second-brain)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Pages](https://img.shields.io/github/actions/workflow/status/Awaiswilll/ai-native-second-brain/pages.yml?label=pages)](https://github.com/Awaiswilll/ai-native-second-brain/actions/workflows/pages.yml)
+[![Hub](https://img.shields.io/badge/hub-live%20dashboard-65d895)](https://awaiswilll.github.io/ai-native-second-brain/hub/)
+
 An AI-native, flat-markdown second brain. One topic per file, no databases, no proprietary tools. Any AI agent (Claude Code, Codex, opencode, Gemini) or human can read this folder and act as your memory.
 
 ## Quick start
