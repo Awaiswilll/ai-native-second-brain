@@ -30,11 +30,15 @@ second-brain/
 
 `hub/server.js` is a zero-dependency Node.js HTTP server (port 9000, `0.0.0.0`). It replaces the old standalone AI Hub and adds a memory layer:
 
-- `GET /api/status` — probes Paperclip (:3100) and Ollama (:11434), detects installed CLIs (ollama, flatpak/newelle, claude, codex, grok), and returns the Ollama model list.
+- `GET /api/status` — probes Paperclip (:3100) and Ollama (:11434), detects installed CLIs (ollama, flatpak/newelle, claude, codex, grok, potpie), and returns the Ollama model list + GPU info.
 - `GET /api/brain` — returns git commit, uncommitted-change count, and the file lists for `notes/`, `people/`, `projects/`, and root docs.
+- `GET /api/search?q=…` — full-text search across every markdown file in the brain (filename + content, with line matches).
+- `GET /api/file?path=…` — raw markdown content of any brain file for inline preview.
+- `GET /api/activity` — last 10 git commits (hash, date, subject).
+- `POST /api/potpie` — runs an allow-listed Potpie CLI action (status, doctor, whoami, graph status, source list, pot list, resolve, search) and returns stdout/stderr. Loopback-only; args are validated against shell metacharacters.
 - `POST /api/launch/:tool` — spawns an allow-listed local tool (loopback clients only).
 - `GET /brain/<path>` — read-only view of any file in this repo (markdown rendered as text).
-- `index.html` — a single self-contained dashboard: memory stats, file browser, and tool cards (Ollama, Paperclip, Newelle, Claude, Codex, Grok, Manus, Potpie).
+- `index.html` — a dynamic single-page dashboard with tabs (Memory / Tools / Potpie / Activity), live search + inline markdown preview, tool status cards, a Potpie console, and a recent-commits log.
 
 Run it: `node hub/server.js` (managed as the `ai-hub` systemd user service).
 
