@@ -22,8 +22,21 @@ second-brain/
 ├── README.md       <- How to use the system
 ├── notes/          <- Topical knowledge, one file per topic
 ├── people/         <- One file per person you interact with
-└── projects/       <- One file per project you work on
+├── projects/       <- One file per project you work on
+└── hub/            <- The dashboard (formerly AI Hub): launchpad + memory viewer
 ```
+
+## The hub (`hub/`)
+
+`hub/server.js` is a zero-dependency Node.js HTTP server (port 9000, `0.0.0.0`). It replaces the old standalone AI Hub and adds a memory layer:
+
+- `GET /api/status` — probes Paperclip (:3100) and Ollama (:11434), detects installed CLIs (ollama, flatpak/newelle, claude, codex, grok), and returns the Ollama model list.
+- `GET /api/brain` — returns git commit, uncommitted-change count, and the file lists for `notes/`, `people/`, `projects/`, and root docs.
+- `POST /api/launch/:tool` — spawns an allow-listed local tool (loopback clients only).
+- `GET /brain/<path>` — read-only view of any file in this repo (markdown rendered as text).
+- `index.html` — a single self-contained dashboard: memory stats, file browser, and tool cards.
+
+Run it: `node hub/server.js` (managed as the `ai-hub` systemd user service).
 
 ## Where things go
 
