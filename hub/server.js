@@ -24,6 +24,7 @@ const tools = {
   deepsec: { name: 'Deepsec', type: 'terminal', command: 'echo "Deepsec Security Scanner - https://github.com/Awaiswilll/deepsec"' },
   squad: { name: 'Squad', type: 'terminal', command: 'echo "Squad - AI Agent Teams"; echo "Usage: squad init | squad triage | squad doctor"' },
   airllm: { name: 'AirLLM', type: 'terminal', command: 'echo "AirLLM - 70B inference on 4GB GPU"; echo "Usage: cd ~/airllm-env && source bin/activate && python3 -c \"from airllm import AutoModel; print(\\\"AirLLM ready\\\")\""' },
+  understand: { name: 'Understand-Anything', type: 'terminal', command: 'echo "Understand-Anything - Knowledge Graph for Code"; echo "Usage: /understand (in Claude Code) or $understand (in Codex)"' },
 };
 
 // -- Allowlisted Potpie invocations. Args are validated: no shell metacharacters.
@@ -172,8 +173,8 @@ function runPotpie(command, args = []) {
 }
 
 async function getStatus() {
-  const [paperclip, ollama, ollamaCli, newelle, alpaca, claude, codex, grok, potpie, deepsec, squad, airllm, brain] = await Promise.all([
-    probe(tools.paperclip.url), probe(`${OLLAMA_URL}/api/tags`), commandAvailable('ollama'), commandAvailable('flatpak'), commandAvailable('snap'), commandAvailable('claude'), commandAvailable('codex'), commandAvailable('/home/grok/.grok/bin/grok'), commandAvailable('potpie'), commandAvailable('npx'), commandAvailable('squad'), commandAvailable('/home/grok/airllm-env/bin/python3'), getBrainStats(),
+  const [paperclip, ollama, ollamaCli, newelle, alpaca, claude, codex, grok, potpie, deepsec, squad, airllm, understand, brain] = await Promise.all([
+    probe(tools.paperclip.url), probe(`${OLLAMA_URL}/api/tags`), commandAvailable('ollama'), commandAvailable('flatpak'), commandAvailable('snap'), commandAvailable('claude'), commandAvailable('codex'), commandAvailable('/home/grok/.grok/bin/grok'), commandAvailable('potpie'), commandAvailable('npx'), commandAvailable('squad'), commandAvailable('/home/grok/airllm-env/bin/python3'), commandAvailable('/home/grok/.understand-anything/repo/install.sh'), getBrainStats(),
   ]);
   let models = [];
   let gpuInfo = '';
@@ -197,7 +198,7 @@ async function getStatus() {
       paperclip: { ...paperclip, url: tools.paperclip.url },
       ollama: { ...ollama, url: OLLAMA_URL, models },
       ollamaCli: { available: ollamaCli },
-      newelle: { available: newelle }, alpaca: { available: alpaca }, claude: { available: claude }, codex: { available: codex }, grok: { available: grok }, potpie: { available: potpie }, deepsec: { available: deepsec }, squad: { available: squad }, airllm: { available: airllm },
+      newelle: { available: newelle }, alpaca: { available: alpaca }, claude: { available: claude }, codex: { available: codex }, grok: { available: grok }, potpie: { available: potpie }, deepsec: { available: deepsec }, squad: { available: squad }, airllm: { available: airllm }, understand: { available: understand },
       manus: { online: true, url: 'https://manus.im' },
     },
   };

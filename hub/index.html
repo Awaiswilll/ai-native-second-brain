@@ -97,6 +97,7 @@
         <div class="card" id="grok-card"><div class="top"><span class="icon">G</span><span class="pill offline">Checking</span></div><div class="name">Grok Build</div><p class="desc">Coding agent for feature delivery with isolated worktrees.</p><div class="meta"><button class="action" onclick="launch('grok')">Open terminal</button><span id="grok-state">—</span></div></div>
         <div class="card" id="potpie-card"><div class="top"><span class="icon">P</span><span class="pill offline">Checking</span></div><div class="name">Potpie</div><p class="desc">Context graph for this repo — search code, decisions, and history with project-specific context.</p><div class="meta"><button class="action" onclick="launch('potpie')">Open graph UI</button><span id="potpie-state">—</span></div></div>
         <a class="card" href="https://openrouter.ai" target="_blank" rel="noopener"><div class="top"><span class="icon">OR</span><span class="pill cloud">Cloud</span></div><div class="name">OpenRouter</div><p class="desc">Access 200+ AI models — GPT, Claude, Llama, Gemini and more via a single API.</p><div class="meta"><span>Open OpenRouter</span><span>↗</span></div></a>
+        <div class="card" id="understand-card"><div class="top"><span class="icon">UA</span><span class="pill offline">Checking</span></div><div class="name">Understand-Anything</div><p class="desc">Turn any codebase into an interactive knowledge graph — explore, search, ask questions.</p><div class="models"><span class="model"><b>/understand</b></span><span class="model"><b>/understand-dashboard</b></span></div><div class="meta"><button class="action" onclick="launch('understand')">Open terminal</button><span id="understand-state">—</span></div></div>
       </div>
 
       <div class="section"><h3>Security</h3></div>
@@ -265,9 +266,9 @@ claude --prompt 'load context for this repo via potpie'   # requires the claude 
         models.innerHTML = t.ollama.models.length ? t.ollama.models.map((m) => `<span class="model"><b>${esc(m.name)}</b>${m.size ? ` · ${fmtBytes(m.size)}` : ''}</span>`).join('') : `<span class="empty">${t.ollama.online ? 'No models installed — run <code>ollama pull &lt;model&gt;</code>' : 'Start Ollama to see models'}</span>`;
         setCard('paperclip', t.paperclip.online, t.paperclip.online ? 'Online' : 'Offline');
         if (t.paperclip.online) $('#paperclip-card').href = `${location.protocol}//${location.hostname}:3100`;
-        ['newelle', 'claude', 'codex', 'grok', 'potpie', 'deepsec', 'squad', 'airllm'].forEach((id) => setCard(id, t[id].available, t[id].available ? 'Ready' : 'Unavailable'));
-        const online = [t.ollama.online, t.paperclip.online, t.ollamaCli, t.newelle, t.claude, t.codex, t.grok, t.potpie, t.deepsec, t.squad, t.airllm].filter(Boolean).length;
-        $('#summary').textContent = `${online}/11 local services ready`;
+        ['newelle', 'claude', 'codex', 'grok', 'potpie', 'deepsec', 'squad', 'airllm', 'understand'].forEach((id) => setCard(id, t[id].available, t[id].available ? 'Ready' : 'Unavailable'));
+        const online = [t.ollama.online, t.paperclip.online, t.ollamaCli, t.newelle, t.claude, t.codex, t.grok, t.potpie, t.deepsec, t.squad, t.airllm, t.understand].filter(Boolean).length;
+        $('#summary').textContent = `${online}/12 local services ready`;
         $('#badge-online').textContent = online;
         $('#hub-dot').style.background = online ? 'var(--green)' : 'var(--amber)';
         if (t.gpu) $('#gpu-info').textContent = `GPU: ${t.gpu}`;
