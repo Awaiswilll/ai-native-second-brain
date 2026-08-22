@@ -20,6 +20,7 @@ const tools = {
   codex: { name: 'Codex CLI', type: 'terminal', command: 'codex' },
   grok: { name: 'Grok Build', type: 'terminal', command: '/home/grok/.grok/bin/grok', cwd: '/home/grok' },
   potpie: { name: 'Potpie', type: 'terminal', command: 'potpie ui' },
+  deepsec: { name: 'Deepsec', type: 'terminal', command: 'echo "Deepsec Security Scanner - https://github.com/Awaiswilll/deepsec"' },
 };
 
 // -- Allowlisted Potpie invocations. Args are validated: no shell metacharacters.
@@ -168,8 +169,8 @@ function runPotpie(command, args = []) {
 }
 
 async function getStatus() {
-  const [paperclip, ollama, ollamaCli, newelle, claude, codex, grok, potpie, brain] = await Promise.all([
-    probe(tools.paperclip.url), probe(`${OLLAMA_URL}/api/tags`), commandAvailable('ollama'), commandAvailable('flatpak'), commandAvailable('claude'), commandAvailable('codex'), commandAvailable('/home/grok/.grok/bin/grok'), commandAvailable('potpie'), getBrainStats(),
+  const [paperclip, ollama, ollamaCli, newelle, claude, codex, grok, potpie, deepsec, brain] = await Promise.all([
+    probe(tools.paperclip.url), probe(`${OLLAMA_URL}/api/tags`), commandAvailable('ollama'), commandAvailable('flatpak'), commandAvailable('claude'), commandAvailable('codex'), commandAvailable('/home/grok/.grok/bin/grok'), commandAvailable('potpie'), commandAvailable('npx'), getBrainStats(),
   ]);
   let models = [];
   let gpuInfo = '';
@@ -193,7 +194,7 @@ async function getStatus() {
       paperclip: { ...paperclip, url: tools.paperclip.url },
       ollama: { ...ollama, url: OLLAMA_URL, models },
       ollamaCli: { available: ollamaCli },
-      newelle: { available: newelle }, claude: { available: claude }, codex: { available: codex }, grok: { available: grok }, potpie: { available: potpie },
+      newelle: { available: newelle }, claude: { available: claude }, codex: { available: codex }, grok: { available: grok }, potpie: { available: potpie }, deepsec: { available: deepsec },
       manus: { online: true, url: 'https://manus.im' },
     },
   };

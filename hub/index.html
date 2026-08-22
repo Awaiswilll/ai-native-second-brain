@@ -9,7 +9,8 @@
     * { box-sizing:border-box } body { margin:0; min-width:320px; font:15px/1.5 Inter,ui-sans-serif,system-ui,sans-serif; background:radial-gradient(circle at top right,#151b2c 0,transparent 35%),var(--bg); color:var(--text) }
     header,main,footer { width:min(1160px,calc(100% - 40px)); margin:auto } header { min-height:76px; display:flex; align-items:center; justify-content:space-between; gap:20px; border-bottom:1px solid var(--line) } h1 { margin:0; font-size:20px; letter-spacing:-.04em } .eyebrow { margin:0 0 3px; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.12em } .status { display:flex; gap:10px; align-items:center; color:var(--muted); font-size:13px } .dot { width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green) } .clock { font-variant-numeric:tabular-nums }
     nav { position:sticky; top:0; z-index:20; background:rgba(9,11,16,.86); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); margin-bottom:34px } .tabs { display:flex; gap:4px; overflow-x:auto; padding:8px 0 } .tab { appearance:none;border:0;background:transparent;color:var(--muted);font:inherit;font-size:14px;padding:9px 16px;border-radius:10px;cursor:pointer;white-space:nowrap;display:flex;gap:8px;align-items:center } .tab:hover{color:var(--text)} .tab.active{background:#1c2333;color:var(--text)} .tab .badge { font-size:10px;padding:1px 7px;border-radius:999px;background:#202943;color:var(--blue) }
-    main { padding:0 0 28px } .panel { display:none } .panel.active { display:block; animation:in .18s ease } @keyframes in { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:none} }
+    main { padding:0 0 28px } .panel { display:none } .panel.active { display:block; animation:in .18s ease }     @keyframes in { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:none} }
+    @keyframes slideIn { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none} }
     .section { margin:30px 0 14px; display:flex; align-items:center; justify-content:space-between; gap:12px } .section h3 { margin:0; font-size:13px; text-transform:uppercase; letter-spacing:.1em; color:var(--muted) }
     .grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px }
     .card { position:relative; min-height:196px; padding:20px; border:1px solid var(--line); border-radius:16px; background:linear-gradient(145deg,#141824,#10131a); display:flex; flex-direction:column; text-decoration:none; color:inherit; transition:.16s ease } .card:hover { transform:translateY(-2px); border-color:#52627e } .card[aria-disabled="true"] { cursor:default } .card a { color:var(--blue); text-decoration:none } .card a:hover { text-decoration:underline }
@@ -88,6 +89,13 @@
         <div class="card" id="potpie-card"><div class="top"><span class="icon">P</span><span class="pill offline">Checking</span></div><div class="name">Potpie</div><p class="desc">Context graph for this repo — search code, decisions, and history with project-specific context.</p><div class="meta"><button class="action" onclick="launch('potpie')">Open graph UI</button><span id="potpie-state">—</span></div></div>
         <a class="card" href="https://openrouter.ai" target="_blank" rel="noopener"><div class="top"><span class="icon">OR</span><span class="pill cloud">Cloud</span></div><div class="name">OpenRouter</div><p class="desc">Access 200+ AI models — GPT, Claude, Llama, Gemini and more via a single API.</p><div class="meta"><span>Open OpenRouter</span><span>↗</span></div></a>
       </div>
+
+      <div class="section"><h3>Security</h3></div>
+      <div class="grid">
+        <div class="card" id="deepsec-card"><div class="top"><span class="icon">DS</span><span class="pill offline">Checking</span></div><div class="name">Deepsec</div><p class="desc">Agent-powered vulnerability scanner for finding security issues in your codebase.</p><div class="models"><span class="model"><b>npx deepsec init</b></span><span class="model"><b>pnpm deepsec scan</b></span><span class="model"><b>pnpm deepsec process</b></span></div><div class="meta"><button class="action" onclick="launch('deepsec')">Open terminal</button><span id="deepsec-state">—</span></div></div>
+        <a class="card" href="https://github.com/Awaiswilll/deepsec" target="_blank" rel="noopener"><div class="top"><span class="icon">GH</span><span class="pill cloud">GitHub</span></div><div class="name">Deepsec Repo</div><p class="desc">View the deepsec source code, documentation, and contribute to the project.</p><div class="meta"><span>View on GitHub</span><span>↗</span></div></a>
+      </div>
+
       <div class="notice">Launching desktop and terminal tools from the hub only works on G3 itself. The dashboard stays safe to view over LAN/Tailscale; remote devices can still open Paperclip, Manus, and OpenRouter.</div>
     </section>
 
@@ -150,7 +158,7 @@ claude --prompt 'load context for this repo via potpie'   # requires the claude 
     </section>
   </main>
 
-  <footer><span>Second Brain · local-first · flat markdown</span><span id="updated">Not checked yet</span></footer>
+  <footer><span>Second Brain · local-first · flat markdown · <a href="https://github.com/Awaiswilll/ai-native-second-brain" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:none">GitHub</a></span><span id="updated">Not checked yet</span></footer>
 
   <script>
     const $ = (s) => document.querySelector(s);
@@ -248,9 +256,9 @@ claude --prompt 'load context for this repo via potpie'   # requires the claude 
         models.innerHTML = t.ollama.models.length ? t.ollama.models.map((m) => `<span class="model"><b>${esc(m.name)}</b>${m.size ? ` · ${fmtBytes(m.size)}` : ''}</span>`).join('') : `<span class="empty">${t.ollama.online ? 'No models installed — run <code>ollama pull &lt;model&gt;</code>' : 'Start Ollama to see models'}</span>`;
         setCard('paperclip', t.paperclip.online, t.paperclip.online ? 'Online' : 'Offline');
         if (t.paperclip.online) $('#paperclip-card').href = `${location.protocol}//${location.hostname}:3100`;
-        ['newelle', 'claude', 'codex', 'grok', 'potpie'].forEach((id) => setCard(id, t[id].available, t[id].available ? 'Ready' : 'Unavailable'));
-        const online = [t.ollama.online, t.paperclip.online, t.ollamaCli, t.newelle, t.claude, t.codex, t.grok, t.potpie].filter(Boolean).length;
-        $('#summary').textContent = `${online}/8 local services ready`;
+        ['newelle', 'claude', 'codex', 'grok', 'potpie', 'deepsec'].forEach((id) => setCard(id, t[id].available, t[id].available ? 'Ready' : 'Unavailable'));
+        const online = [t.ollama.online, t.paperclip.online, t.ollamaCli, t.newelle, t.claude, t.codex, t.grok, t.potpie, t.deepsec].filter(Boolean).length;
+        $('#summary').textContent = `${online}/9 local services ready`;
         $('#badge-online').textContent = online;
         $('#hub-dot').style.background = online ? 'var(--green)' : 'var(--amber)';
         if (t.gpu) $('#gpu-info').textContent = `GPU: ${t.gpu}`;
@@ -260,12 +268,32 @@ claude --prompt 'load context for this repo via potpie'   # requires the claude 
     }
 
     async function launch(tool) {
+      const btn = event.target;
+      const origText = btn.textContent;
+      btn.textContent = 'Launching…';
+      btn.disabled = true;
       try {
         const r = await fetch(`/api/launch/${tool}`, { method: 'POST' });
         const j = await r.json();
         if (!r.ok) throw new Error(j.error);
-        alert(`${tool.replace('-', ' ')} launched on G3.`);
-      } catch (e) { alert(e.message || 'Launch failed. Open the hub directly on G3 to launch local tools.'); }
+        btn.textContent = '✓ Launched';
+        setTimeout(() => { btn.textContent = origText; btn.disabled = false; }, 2000);
+      } catch (e) {
+        btn.textContent = '✗ Failed';
+        setTimeout(() => { btn.textContent = origText; btn.disabled = false; }, 2000);
+        showToast(e.message || 'Launch failed. Open the hub directly on G3 to launch local tools.', 'error');
+      }
+    }
+
+    function showToast(message, type = 'info') {
+      const existing = document.querySelector('.toast');
+      if (existing) existing.remove();
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.style.cssText = `position:fixed;bottom:20px;right:20px;padding:12px 20px;border-radius:10px;font-size:14px;z-index:1000;animation:slideIn .3s ease;max-width:400px;${type === 'error' ? 'background:#2c2118;color:#f1ae52;border:1px solid #f1ae52' : 'background:#17241d;color:#65d895;border:1px solid #65d895'}`;
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 4000);
     }
 
     // ---- Potpie ----
