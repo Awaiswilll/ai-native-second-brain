@@ -79,7 +79,15 @@
         <div class="card" id="ollama-card"><div class="top"><span class="icon">O</span><span class="pill offline">Checking</span></div><div class="name">Ollama</div><p class="desc">Private local models for Newelle and your development tools.</p><div class="models"><span class="empty">Loading model library…</span></div><div class="meta"><button class="action" onclick="launch('ollama-cli')">Manage models</button><span id="ollama-state">—</span></div></div>
         <a class="card" id="paperclip-card" href="#" target="_blank" rel="noopener" aria-disabled="true"><div class="top"><span class="icon">P</span><span class="pill offline">Checking</span></div><div class="name">Paperclip</div><p class="desc">Coordinate AI work with tasks, agents, budgets, and organisation views.</p><div class="meta"><span>Web app :3100</span><span id="paperclip-state">—</span></div></a>
         <div class="card" id="newelle-card"><div class="top"><span class="icon">N</span><span class="pill offline">Checking</span></div><div class="name">Newelle</div><p class="desc">Desktop assistant with local-model support, memory, and voice features.</p><div class="meta"><button class="action" onclick="launch('newelle')">Launch on G3</button><span id="newelle-state">—</span></div></div>
+        <div class="card" id="alpaca-card"><div class="top"><span class="icon">A</span><span class="pill offline">Checking</span></div><div class="name">Alpaca</div><p class="desc">Lightweight AI chat — local Ollama, web search, images, YouTube transcripts.</p><div class="meta"><button class="action" onclick="launch('alpaca')">Launch on G3</button><span id="alpaca-state">—</span></div></div>
       </div>
+      <div class="section"><h3>Agent Teams</h3></div>
+      <div class="grid">
+        <div class="card" id="squad-card"><div class="top"><span class="icon">SQ</span><span class="pill offline">Checking</span></div><div class="name">Squad</div><p class="desc">AI agent teams for any project — one command, a team that helps you move faster.</p><div class="models"><span class="model"><b>squad init</b></span><span class="model"><b>squad triage</b></span><span class="model"><b>squad doctor</b></span></div><div class="meta"><button class="action" onclick="launch('squad')">Open terminal</button><span id="squad-state">—</span></div></div>
+        <a class="card" href="https://github.com/Awaiswilll/squad" target="_blank" rel="noopener"><div class="top"><span class="icon">GH</span><span class="pill cloud">GitHub</span></div><div class="name">Squad Repo</div><p class="desc">View the Squad source code, documentation, and contribute to the project.</p><div class="meta"><span>View on GitHub</span><span>↗</span></div></a>
+        <a class="card" href="https://bradygaster.github.io/squad/" target="_blank" rel="noopener"><div class="top"><span class="icon">DO</span><span class="pill cloud">Docs</span></div><div class="name">Squad Docs</div><p class="desc">Full documentation for Squad — getting started, SDK reference, and guides.</p><div class="meta"><span>Open docs</span><span>↗</span></div></a>
+      </div>
+
       <div class="section"><h3>Agents &amp; coding</h3><span class="empty" id="gpu-info"></span></div>
       <div class="grid">
         <a class="card" href="https://manus.im" target="_blank" rel="noopener"><div class="top"><span class="icon">M</span><span class="pill cloud">Cloud</span></div><div class="name">Manus</div><p class="desc">Autonomous cloud agent for browser-based research and longer-running tasks.</p><div class="meta"><span>Open Manus</span><span>↗</span></div></a>
@@ -256,9 +264,9 @@ claude --prompt 'load context for this repo via potpie'   # requires the claude 
         models.innerHTML = t.ollama.models.length ? t.ollama.models.map((m) => `<span class="model"><b>${esc(m.name)}</b>${m.size ? ` · ${fmtBytes(m.size)}` : ''}</span>`).join('') : `<span class="empty">${t.ollama.online ? 'No models installed — run <code>ollama pull &lt;model&gt;</code>' : 'Start Ollama to see models'}</span>`;
         setCard('paperclip', t.paperclip.online, t.paperclip.online ? 'Online' : 'Offline');
         if (t.paperclip.online) $('#paperclip-card').href = `${location.protocol}//${location.hostname}:3100`;
-        ['newelle', 'claude', 'codex', 'grok', 'potpie', 'deepsec'].forEach((id) => setCard(id, t[id].available, t[id].available ? 'Ready' : 'Unavailable'));
-        const online = [t.ollama.online, t.paperclip.online, t.ollamaCli, t.newelle, t.claude, t.codex, t.grok, t.potpie, t.deepsec].filter(Boolean).length;
-        $('#summary').textContent = `${online}/9 local services ready`;
+        ['newelle', 'claude', 'codex', 'grok', 'potpie', 'deepsec', 'squad'].forEach((id) => setCard(id, t[id].available, t[id].available ? 'Ready' : 'Unavailable'));
+        const online = [t.ollama.online, t.paperclip.online, t.ollamaCli, t.newelle, t.claude, t.codex, t.grok, t.potpie, t.deepsec, t.squad].filter(Boolean).length;
+        $('#summary').textContent = `${online}/10 local services ready`;
         $('#badge-online').textContent = online;
         $('#hub-dot').style.background = online ? 'var(--green)' : 'var(--amber)';
         if (t.gpu) $('#gpu-info').textContent = `GPU: ${t.gpu}`;

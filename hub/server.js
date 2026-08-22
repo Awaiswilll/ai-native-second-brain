@@ -16,11 +16,13 @@ const tools = {
   ollama: { name: 'Ollama', type: 'service', url: OLLAMA_URL, port: new URL(OLLAMA_URL).port || 11434 },
   'ollama-cli': { name: 'Ollama terminal', type: 'terminal', command: 'ollama list; echo; echo "Manage models with: ollama pull <model>"' },
   newelle: { name: 'Newelle', type: 'desktop', command: 'flatpak', args: ['run', 'io.github.qwersyk.Newelle'] },
+  alpaca: { name: 'Alpaca', type: 'desktop', command: 'snap', args: ['run', 'alpaca-kenvandine'] },
   claude: { name: 'Claude Code', type: 'terminal', command: 'claude' },
   codex: { name: 'Codex CLI', type: 'terminal', command: 'codex' },
   grok: { name: 'Grok Build', type: 'terminal', command: '/home/grok/.grok/bin/grok', cwd: '/home/grok' },
   potpie: { name: 'Potpie', type: 'terminal', command: 'potpie ui' },
   deepsec: { name: 'Deepsec', type: 'terminal', command: 'echo "Deepsec Security Scanner - https://github.com/Awaiswilll/deepsec"' },
+  squad: { name: 'Squad', type: 'terminal', command: 'echo "Squad - AI Agent Teams"; echo "Usage: squad init | squad triage | squad doctor"' },
 };
 
 // -- Allowlisted Potpie invocations. Args are validated: no shell metacharacters.
@@ -169,8 +171,8 @@ function runPotpie(command, args = []) {
 }
 
 async function getStatus() {
-  const [paperclip, ollama, ollamaCli, newelle, claude, codex, grok, potpie, deepsec, brain] = await Promise.all([
-    probe(tools.paperclip.url), probe(`${OLLAMA_URL}/api/tags`), commandAvailable('ollama'), commandAvailable('flatpak'), commandAvailable('claude'), commandAvailable('codex'), commandAvailable('/home/grok/.grok/bin/grok'), commandAvailable('potpie'), commandAvailable('npx'), getBrainStats(),
+  const [paperclip, ollama, ollamaCli, newelle, alpaca, claude, codex, grok, potpie, deepsec, squad, brain] = await Promise.all([
+    probe(tools.paperclip.url), probe(`${OLLAMA_URL}/api/tags`), commandAvailable('ollama'), commandAvailable('flatpak'), commandAvailable('snap'), commandAvailable('claude'), commandAvailable('codex'), commandAvailable('/home/grok/.grok/bin/grok'), commandAvailable('potpie'), commandAvailable('npx'), commandAvailable('squad'), getBrainStats(),
   ]);
   let models = [];
   let gpuInfo = '';
@@ -194,7 +196,7 @@ async function getStatus() {
       paperclip: { ...paperclip, url: tools.paperclip.url },
       ollama: { ...ollama, url: OLLAMA_URL, models },
       ollamaCli: { available: ollamaCli },
-      newelle: { available: newelle }, claude: { available: claude }, codex: { available: codex }, grok: { available: grok }, potpie: { available: potpie }, deepsec: { available: deepsec },
+      newelle: { available: newelle }, alpaca: { available: alpaca }, claude: { available: claude }, codex: { available: codex }, grok: { available: grok }, potpie: { available: potpie }, deepsec: { available: deepsec }, squad: { available: squad },
       manus: { online: true, url: 'https://manus.im' },
     },
   };
