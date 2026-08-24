@@ -32,6 +32,18 @@
 **Alternatives:** Point Newelle's RAG embeddings at the folder; keep Newelle's memory app-bound.
 **Why:** Newelle's own memory is an app-bound embedding index. Giving it direct filesystem access to this repo makes the same flat-markdown memory readable/writable by Newelle, Claude Code, Codex, and opencode identically — one memory, all agents.
 
+## 2026-08-24 — Resume opencode sessions after reboot via headless tmux
+
+**Decision:** Run `~/.local/bin/resume-opencode-sessions.sh` from a user `@reboot` crontab entry; it creates **detached tmux sessions** (`oc-<id>`, `opencode -s <id>`) for every non-archived session active in the last `OPENCODE_RECENT_DAYS` (default 7), with no GUI dependency. Attach after login via `ocls` / `ocattach`.
+**Alternatives:** (1) Launching terminator windows from @reboot — failed silently: cron fires before the graphical session/DBus exists, terminator crashes, and cron discards output (no MTA). (2) Boot-period detection (sessions between previous/current boot timestamps) — window was empty in practice since activity lands just before shutdown or after next boot.
+**Why:** Detached tmux needs no display or DBus, so it works at the earliest boot stage; logging to `~/.local/share/opencode/resume-sessions.log` makes boot runs auditable. See [projects/opencode-session-resume.md](./projects/opencode-session-resume.md).
+
+## 2026-08-24 — Ollama knowledge distillation via second-brain
+
+**Decision:** Store deeper knowledge distilled from cloud agents as structured markdown notes in `second-brain/notes/`, using the reusable prompt template defined in `notes/ollama-knowledge-distillation.md`. Local qwen3.5 remains the default; cloud models require explicit user approval and output only in the second-brain format.
+**Alternatives:** Direct fine-tuning of the 4B model on raw cloud traces; keeping all knowledge inside model weights; using a separate vector database without markdown.
+**Why:** Flat markdown is portable, human-readable, survives OS/model changes, and requires zero tooling. It serves as both immediate RAG source and future synthetic-training corpus. This matches the existing second-brain philosophy and avoids unnecessary cloud spend.
+
 ## 2026-08-20 — Embed Potpie as the context-graph layer
 
 **Decision:** Installed Potpie (potpie-context-engine 0.1.0, CPU-only torch) into `~/.local`, set it up against this repo (daemon, default pot, source registration, 8 claude skills), added a `notes/potpie.md` knowledge note, and added a Potpie card to the hub dashboard.
