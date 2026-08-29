@@ -80,7 +80,6 @@
         <a class="card" id="paperclip-card" href="#" target="_blank" rel="noopener" aria-disabled="true"><div class="top"><span class="icon">P</span><span class="pill offline">Checking</span></div><div class="name">Paperclip</div><p class="desc">Coordinate AI work with tasks, agents, budgets, and organisation views.</p><div class="meta"><span>Web app :3100</span><span id="paperclip-state">—</span></div></a>
         <div class="card" id="newelle-card"><div class="top"><span class="icon">N</span><span class="pill offline">Checking</span></div><div class="name">Newelle</div><p class="desc">Desktop assistant with local-model support, memory, and voice features.</p><div class="meta"><button class="action" onclick="launch('newelle')">Launch on G3</button><span id="newelle-state">—</span></div></div>
         <div class="card" id="alpaca-card"><div class="top"><span class="icon">A</span><span class="pill offline">Checking</span></div><div class="name">Alpaca</div><p class="desc">Lightweight AI chat — local Ollama, web search, images, YouTube transcripts.</p><div class="meta"><button class="action" onclick="launch('alpaca')">Launch on G3</button><span id="alpaca-state">—</span></div></div>
-        <div class="card" id="airllm-card"><div class="top"><span class="icon">AI</span><span class="pill offline">Checking</span></div><div class="name">AirLLM</div><p class="desc">Run 70B LLMs on 4GB GPU — no quantization, layer-by-layer inference.</p><div class="models"><span class="model"><b>70B on 6GB</b></span><span class="model"><b>235B MoE ~3GB</b></span></div><div class="meta"><button class="action" onclick="launch('airllm')">Open terminal</button><span id="airllm-state">—</span></div></div>
       </div>
       <div class="section"><h3>Agent Teams</h3></div>
       <div class="grid">
@@ -266,9 +265,9 @@ claude --prompt 'load context for this repo via potpie'   # requires the claude 
         models.innerHTML = t.ollama.models.length ? t.ollama.models.map((m) => `<span class="model"><b>${esc(m.name)}</b>${m.size ? ` · ${fmtBytes(m.size)}` : ''}</span>`).join('') : `<span class="empty">${t.ollama.online ? 'No models installed — run <code>ollama pull &lt;model&gt;</code>' : 'Start Ollama to see models'}</span>`;
         setCard('paperclip', t.paperclip.online, t.paperclip.online ? 'Online' : 'Offline');
         if (t.paperclip.online) $('#paperclip-card').href = `${location.protocol}//${location.hostname}:3100`;
-        ['newelle', 'claude', 'codex', 'grok', 'potpie', 'deepsec', 'squad', 'airllm', 'understand'].forEach((id) => setCard(id, t[id].available, t[id].available ? 'Ready' : 'Unavailable'));
-        const online = [t.ollama.online, t.paperclip.online, t.ollamaCli, t.newelle, t.claude, t.codex, t.grok, t.potpie, t.deepsec, t.squad, t.airllm, t.understand].filter(Boolean).length;
-        $('#summary').textContent = `${online}/12 local services ready`;
+        ['newelle', 'claude', 'codex', 'grok', 'potpie', 'deepsec', 'squad', 'understand'].forEach((id) => setCard(id, t[id].available, t[id].available ? 'Ready' : 'Unavailable'));
+        const online = [t.ollama.online, t.paperclip.online, t.ollamaCli, t.newelle, t.claude, t.codex, t.grok, t.potpie, t.deepsec, t.squad, t.understand].filter(Boolean).length;
+        $('#summary').textContent = `${online}/11 local services ready`;
         $('#badge-online').textContent = online;
         $('#hub-dot').style.background = online ? 'var(--green)' : 'var(--amber)';
         if (t.gpu) $('#gpu-info').textContent = `GPU: ${t.gpu}`;
