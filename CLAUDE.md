@@ -115,6 +115,14 @@ Relevant references.
 4. When you make a decision: log it in `decisions.md` with the date.
 5. Never create files outside this structure without adding them to the map here.
 
+## Recent additions
+
+- [notes/fbr-iris-tax-agent.md](./notes/fbr-iris-tax-agent.md) — the published FBR IRIS automation agent/skill: session-auth model for `api.fbr.gov.pk`, versioned Finance Act slab engine with a `--solve` reconciler, pre-flight submission gate, and the PII/e-Pin/draft-duplication safety rules. Repo (private): `github.com/Awaiswilll/fbr-iris-tax-agent`.
+- [projects/fbr-iris-tax-agent.md](./projects/fbr-iris-tax-agent.md) — that repo's status, privacy decisions, and the open TY2025 tax discrepancy (portal 70,847 vs local 213,228; gap implies ~678,006 undocumented reduction — return deliberately left as DRAFT).
+- [notes/fbr-iris-income-tax-return.md](./notes/fbr-iris-income-tax-return.md) — reusable playbook: filing a Pakistani FBR IRIS 2.0 income tax return (114(1)) via automation (login + captcha OCR, payment verification, e-Pin submit, post-submit verification). Identifiers masked; full credentials in `/home/grok/fbr-tooling/` (chmod 600).
+- [projects/fbr-iris-income-tax-2026.md](./projects/fbr-iris-income-tax-2026.md) — status of the TY2026 filing (SUBMITTED 2026-09-26), decisions, session resume id `ses_f2e0ae5adffeMK8D7K5kkRvlHF`.
+- Potpie graph updated for these (decision/preference/fix claims; `falkordb_lite` is in-memory — re-propose/commit after daemon restart, see [notes/potpie.md](./notes/potpie.md)).
+
 ## Maintainers
 
 - You (the human)
